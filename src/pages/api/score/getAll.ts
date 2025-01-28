@@ -11,14 +11,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .select('*')
 
       if (error) {
-        return res.status(404).json({ error: 'score de l\'utilisateur introuvable.' });
+        return res.status(404).json({ error: 'score de l\'utilisateur introuvable.' + error });
       }
 
       return res.status(200).json(data); // Retourne l'utilisateur trouvé
 
     }
     catch (error) {
-      return res.status(500).json({ error: 'Erreur serveur.' });
+      return res.status(500).json({ error: 'Erreur serveur.' + error });
     }
   } else {
     res.setHeader('Allow', ['GET']);

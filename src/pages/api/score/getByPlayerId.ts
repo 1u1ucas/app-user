@@ -18,13 +18,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .eq('playerId', playerId) // Filtre les scores par user_id
 
       if (error) {
-        return res.status(404).json({ error: 'Scores de l\'utilisateur introuvables.' });
+        return res.status(404).json({ error: 'Scores de l\'utilisateur introuvables.' + error });
       }
 
       return res.status(200).json(data); // Retourne les scores de l'utilisateur
 
     } catch (error) {
-      return res.status(500).json({ error: 'Erreur serveur.' });
+      return res.status(500).json({ error: 'Erreur serveur.' + error });
     }
   }
 
