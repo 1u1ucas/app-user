@@ -17,6 +17,8 @@ const eslintConfig = [
       "no-console": "off",
       "@typescript-eslint/no-unused-vars": ["off"],
       "react/prop-types": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/no-unescaped-entities": "off",
     },
   },
 ];
