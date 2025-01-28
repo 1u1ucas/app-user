@@ -1,8 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '../utils/db';
+import Cors from 'cors';
+
+
+const cors = Cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: '*',
+});
+
+// Helper method to wait for a middleware to execute before continuing
+function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+}
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+    // Run the middleware
+    await runMiddleware(req, res, cors);
+
+    
   if (req.method === 'POST') {
     const { playerId, gameId, score } = req.body;
 
@@ -33,8 +57,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ error: 'Utilisateur introuvable' });
 
       }
-      
-      if(!playerData.username){
 
       const username = playerData.username;
 
