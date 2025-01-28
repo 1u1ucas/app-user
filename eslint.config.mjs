@@ -14,7 +14,9 @@ const eslintConfig = [
   {
     rules: {
       // Disable specific ESLint rules here
+      "no-console": "off",
       "no-unused-vars": "off",
+      "react/prop-types": "off",
     },
   },
 ];
