@@ -20,5 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     catch (error) {
       return res.status(500).json({ error: 'Erreur serveur.' });
     }
+  } else {
+    res.setHeader('Allow', ['GET']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
