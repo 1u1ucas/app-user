@@ -1,7 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import { supabase } from '../utils/db';
 import Cors from 'cors';
-
 
 const cors = Cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -9,7 +8,7 @@ const cors = Cors({
 });
 
 // Helper method to wait for a middleware to execute before continuing
-function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
+function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: (req: NextApiRequest, res: NextApiResponse, result: (result: any) => void) => void) {
   return new Promise((resolve, reject) => {
     fn(req, res, (result: any) => {
       if (result instanceof Error) {
@@ -20,13 +19,10 @@ function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) 
   });
 }
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Run the middleware
+  await runMiddleware(req, res, cors);
 
-    // Run the middleware
-    await runMiddleware(req, res, cors);
-
-    
   if (req.method === 'POST') {
     const { playerId, gameId, score } = req.body;
 
@@ -35,7 +31,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-
       // Vérifie que playerId, gameId et score sont valides
       if (typeof playerId !== 'number' || typeof gameId !== 'number' || typeof score !== 'number') {
         return res.status(400).json({ error: 'Invalid data format' });
@@ -43,10 +38,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       //récupère le username avec le playerId
       const { data: playerData, error: playerError } = await supabase
-      .from('user')
-      .select('*')
-      .or(`playerId.eq.${playerId}`)
-      .single();
+        .from('user')
+        .select('*')
+        .or(`playerId.eq.${playerId}`)
+        .single();
 
       if (playerError) {
         console.error("Erreur lors de la récupération de l'utilisateur:", playerError); // Log l'erreur détaillée
@@ -55,7 +50,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if (!playerData) {
         return res.status(404).json({ error: 'Utilisateur introuvable' });
-
       }
 
       const username = playerData.username;
