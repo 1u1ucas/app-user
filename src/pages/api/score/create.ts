@@ -33,6 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ error: 'Utilisateur introuvable' });
 
       }
+      
+      if(!playerData.username){
 
       const username = playerData.username;
 
