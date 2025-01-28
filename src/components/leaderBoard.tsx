@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useEffect } from "react";
- 
- export default function GlobalRank() {
+
+import LeaderBoardButton from "../components/leaderBoardButton"; 
+
+ export default function LeaderBoard() {
       const [participants, setParticipants] = useState<any[]>([]);
+      const [activity, setActivity] = useState(1);
 
         useEffect(() => {
           const fetchData = async () => {
@@ -12,13 +15,8 @@ import { useState, useEffect } from "react";
               const data = await res.json();
       
               const groupedParticipants = data.reduce((acc: any, participant: any) => {
-                if (acc[participant.playerId]) {
-                  acc[participant.playerId].score += participant.score;
-                } else {
                   acc[participant.playerId] = { ...participant };
-                }
                 return acc;
-      
               }, {});
       
               const sortedParticipants = Object.values(groupedParticipants).sort(
@@ -35,8 +33,10 @@ import { useState, useEffect } from "react";
         }, []);
 
 
+        const filteredParticipants = participants.filter(participant => participant.gameId === activity);
     return (
         <div className="flex flex-col items-start justify-start gap-4 w-full sm:px-10 px-2">
+          <LeaderBoardButton activity={activity} setActivity={setActivity} />
         <div className="flex items-end justify-start self-center row gap-1">
         <svg width="32" height="54" viewBox="0 0 25 33" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="Group 1200">
@@ -47,10 +47,10 @@ import { useState, useEffect } from "react";
           </g>
         </svg>
  
-        <h2 className="font-bold sm:text-4xl text-xl ">Global Rank - {participants.length} PARTICIPANTS</h2>
+        <h2 className="font-bold sm:text-4xl text-xl ">Leader Board - {filteredParticipants.length} PARTICIPANTS</h2>
         </div>
         <div className="grid grid-flow-row grid-cols-2 gap-4 w-full">
-          {participants.slice(0, 10).map((participant, index) => (
+          {filteredParticipants.slice(0, 10).map((participant, index) => (
             <div
               key={index}
               className={`rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 ${index === 0 ? 'firstRank' : ''} ${index === 1 ? 'secondRank' : ''} ${index === 2 ? 'thirdRank' : ''}`}
