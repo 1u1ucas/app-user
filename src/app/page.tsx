@@ -72,7 +72,7 @@ export default function Home() {
               onClick={() => {
                 setUserPageActive(!userPageActive);
               }}
-              className={`profilButton rounded-full flex items-center py-6 ${userPageActive ? 'px-8' : 'px-14'} text-3xl`}>
+              className={`profilButton rounded-full flex items-center py-6 ${userPageActive ? 'px-7' : 'px-14'} text-3xl`}>
                 {userPageActive ? '✖' : 'Voir mon profil'}
             </button>
           </div>

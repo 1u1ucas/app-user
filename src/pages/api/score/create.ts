@@ -36,6 +36,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: 'Invalid data format' });
       }
 
+      //vérifie que il n'y a pas un score plus grand pour le même joueur et le même jeu
+      const { data: scoreData, error: scoreError } = await supabase
+        .from('score')
+        .select('score')
+        .eq('playerId', playerId)
+        .eq('gameId', gameId)
+        .single();
+      
+      if (scoreError) {
+        console.error("Erreur lors de la récupération du score:", scoreError); // Log l'erreur détaillée
+        return res.status(500).json({ error: scoreError.message || 'Erreur inconnue lors de la récupération du score' });
+      }
+
+      if (scoreData && scoreData.score >= score) {
+        return res.status(200).json({ message: 'Score plus petit ou égal au score actuel' });
+      }
+
       //récupère le username avec le playerId
       const { data: playerData, error: playerError } = await supabase
         .from('user')
