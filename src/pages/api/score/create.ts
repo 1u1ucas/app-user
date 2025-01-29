@@ -24,13 +24,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await runMiddleware(req, res, cors);
 
   if (req.method === 'POST') {
-    const { playerId, gameId, score } = req.body;
+    let { playerId, gameId, score } = req.body;
 
     if (!playerId || !gameId || !score) {
       return res.status(400).json({ error: 'playerId, gameId et score sont requis' });
     }
 
     try {
+
+      gameId = Number(gameId);
+      playerId = Number(playerId);
+      score = Number(score);
+
+
       // Vérifie que playerId, gameId et score sont valides
       if (typeof playerId !== 'number' || typeof gameId !== 'number' || typeof score !== 'number') {
         return res.status(400).json({ error: 'Invalid data format' });
@@ -57,10 +63,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .eq('gameId', gameId)
           .single();
 
-        if (deleteError) {
-          console.error("Erreur lors de la suppression du score:", deleteError); // Log l'erreur détaillée
-          return res.status(500).json({ error: deleteError.message || 'Erreur inconnue lors de la suppression du score' });
-        }
 
 
       //récupère le username avec le playerId
