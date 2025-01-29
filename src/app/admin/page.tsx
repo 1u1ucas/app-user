@@ -13,14 +13,19 @@ const games = [
 export default function Admin() {
   const [playerId, setPlayerId] = useState("");
   const [gameId, setGameId] = useState<number>(games[0].id)
-  
-  setGameId(Number(localStorage.getItem('gameId')) || games[0].id);
   const [score, setScore] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    setGameId(Number(localStorage.getItem('gameId')) || games[0].id);
+    }, []);
+
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+
 
     if (!playerId || !gameId || !score) {
       setError("Tous les champs sont obligatoires");
