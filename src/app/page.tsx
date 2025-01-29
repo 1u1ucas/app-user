@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
 import GlobalRank from "../components/globalRank";
 import LeaderBoard from "../components/leaderBoard";
 import BoardButton from "../components/boardButton";
+import UserPage from "../components/userPage";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -14,6 +14,7 @@ export default function Home() {
   const [user, setUser] = useState<any>(null);
   const [active, setActive] = useState("general");
   const [playerId, setPlayerId] = useState<string | null>(null);
+  const [userPageActive, setUserPageActive] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('playerId')) {
@@ -64,7 +65,12 @@ export default function Home() {
         {playerId ? (
           <div>
             <button 
-              className="profilButton rounded-full flex items-center py-6 px-14 text-3xl">Voir mon profil</button>
+              onClick={() => {
+                setUserPageActive(!userPageActive);
+              }}
+              className={`profilButton rounded-full flex items-center py-6 ${userPageActive ? 'px-8' : 'px-14'} text-3xl`}>
+                {userPageActive ? '✖' : 'Voir mon profil'}
+            </button>
           </div>
         ) : (
           <form className="flex flex-col items-center gap-5" onSubmit={handleSubmit}>
@@ -84,10 +90,16 @@ export default function Home() {
           </form>
         )}
       </div>
-      <BoardButton active={active} setActive={setActive} />
+      {userPageActive && <UserPage />}
       
-      {active === "general" && <GlobalRank />}
-      {active === "leaderboard" && <LeaderBoard />}
+      
+      {!userPageActive && (
+        <>
+        <BoardButton active={active} setActive={setActive} />
+          {active === "general" && <GlobalRank />}
+          {active === "leaderboard" && <LeaderBoard />}
+        </>
+      )}
     </section>
   );
 }
