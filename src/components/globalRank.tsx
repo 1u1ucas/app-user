@@ -1,38 +1,58 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  'https://hpjstdrieovdnwvxuaxa.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwanN0ZHJpZW92ZG53dnh1YXhhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzk4MTQ1MSwiZXhwIjoyMDUzNTU3NDUxfQ.WW8V-p37LPTsgRFdvY1rnMKCQcF38pe7YQMQNHgaZbs'
+);
+
  
  export default function GlobalRank() {
       const [participants, setParticipants] = useState<any[]>([]);
 
-        useEffect(() => {
-          const fetchData = async () => {
-            try {
-              const res = await fetch("/api/score/getAll");
-              const data = await res.json();
-      
-              const groupedParticipants = data.reduce((acc: any, participant: any) => {
-                if (acc[participant.playerId]) {
-                  acc[participant.playerId].score += participant.score;
-                } else {
-                  acc[participant.playerId] = { ...participant };
-                }
-                return acc;
-      
-              }, {});
-      
-              const sortedParticipants = Object.values(groupedParticipants).sort(
-                (a: any, b: any) => b.score - a.score
-              );
-      
-              setParticipants(sortedParticipants);
-            } catch (err) {
-              console.error(err);
+
+      const handleInserts = (payload: any) => {
+        fetchData();
+      }
+
+      const fetchData = async () => {
+        try {
+          const res = await fetch("/api/score/getAll");
+          const data = await res.json();
+  
+          const groupedParticipants = data.reduce((acc: any, participant: any) => {
+            if (acc[participant.playerId]) {
+              acc[participant.playerId].score += participant.score;
+            } else {
+              acc[participant.playerId] = { ...participant };
             }
-          };
-      
+            return acc;
+  
+          }, {});
+  
+          const sortedParticipants = Object.values(groupedParticipants).sort(
+            (a: any, b: any) => b.score - a.score
+          );
+  
+          setParticipants(sortedParticipants);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+  
+
+        useEffect(() => {
+
+          if(!supabase) return;
+          supabase
+          .channel('score')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'score' }, handleInserts)
+          .subscribe()
+
           fetchData();
-        }, []);
+        }, [supabase]);
 
 
     return (

@@ -7,6 +7,10 @@ import LeaderBoard from "../components/leaderBoard";
 import BoardButton from "../components/boardButton";
 import UserPage from "../components/userPage";
 
+import { createClient } from "@supabase/supabase-js";
+
+
+
 export default function Home() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
@@ -90,7 +94,7 @@ export default function Home() {
           </form>
         )}
       </div>
-      {userPageActive && <UserPage />}
+      {userPageActive && <UserPage/>}
       
       
       {!userPageActive && (

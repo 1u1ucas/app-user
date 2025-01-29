@@ -4,33 +4,52 @@ import { useState, useEffect } from "react";
 
 import LeaderBoardButton from "../components/leaderBoardButton"; 
 
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  'https://hpjstdrieovdnwvxuaxa.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwanN0ZHJpZW92ZG53dnh1YXhhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzk4MTQ1MSwiZXhwIjoyMDUzNTU3NDUxfQ.WW8V-p37LPTsgRFdvY1rnMKCQcF38pe7YQMQNHgaZbs'
+);
+
  export default function LeaderBoard() {
       const [participants, setParticipants] = useState<any[]>([]);
       const [activity, setActivity] = useState(1);
 
+      const handleInserts = (payload: any) => {
+        fetchData();
+      }
+
+      const fetchData = async () => {
+        try {
+          const res = await fetch("/api/score/getAll");
+          const data = await res.json();
+  
+          const groupedParticipants = data.reduce((acc: any, participant: any) => {
+              acc[participant.playerId] = { ...participant };
+            return acc;
+          }, {});
+  
+          const sortedParticipants = Object.values(groupedParticipants).sort(
+            (a: any, b: any) => b.score - a.score
+          );
+  
+          setParticipants(sortedParticipants);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
         useEffect(() => {
-          const fetchData = async () => {
-            try {
-              const res = await fetch("/api/score/getAll");
-              const data = await res.json();
-      
-              const groupedParticipants = data.reduce((acc: any, participant: any) => {
-                  acc[participant.playerId] = { ...participant };
-                return acc;
-              }, {});
-      
-              const sortedParticipants = Object.values(groupedParticipants).sort(
-                (a: any, b: any) => b.score - a.score
-              );
-      
-              setParticipants(sortedParticipants);
-            } catch (err) {
-              console.error(err);
-            }
-          };
-      
+
+          if(!supabase) return;
+          supabase
+          .channel('score')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'score' }, handleInserts)
+          .subscribe()
+
+
           fetchData();
-        }, []);
+        }, [supabase]);
 
 
         const filteredParticipants = participants.filter(participant => participant.gameId === activity);

@@ -1,7 +1,13 @@
 'use client';
 
-import { i } from "framer-motion/client";
 import { useState, useEffect, use } from "react";
+
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  'https://hpjstdrieovdnwvxuaxa.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwanN0ZHJpZW92ZG53dnh1YXhhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzk4MTQ1MSwiZXhwIjoyMDUzNTU3NDUxfQ.WW8V-p37LPTsgRFdvY1rnMKCQcF38pe7YQMQNHgaZbs'
+);
 
 export default function UserPage() {
     const [playerId, setPlayerId] = useState<string | null>(null);
@@ -29,30 +35,49 @@ export default function UserPage() {
             id: 4,
             name: "Puzzle Tracer"
         }
-    ]);    
-    useEffect(() => {
-        if (localStorage.getItem('playerId')) {
-            const fetchData = async () => {
-                try {
-                     const playerId = localStorage.getItem('playerId');
-                    setPlayerId(playerId);
-                    const res = await fetch(`/api/users/${playerId}`);
-                    const data = await res.json();
-                    setUser(data);
+    ]);  
+    
+    
+    const handleInserts = (payload: any) => {
+        fetchData();
+      }
 
-                    const resScore = await fetch(`/api/score/getByPlayerId?playerId=${playerId}`, {
-                        method: 'GET',
-                    });
-                    const dataScore = await resScore.json();
-                    console.log(dataScore);
-                    setScore(dataScore);
-                } catch (err) {
-                    console.error(err);
-                }
-            };
+    const fetchData = async () => {
+        try {
+             const playerId = localStorage.getItem('playerId');
+            setPlayerId(playerId);
+            const res = await fetch(`/api/users/${playerId}`);
+            const data = await res.json();
+            setUser(data);
+
+            const resScore = await fetch(`/api/score/getByPlayerId?playerId=${playerId}`, {
+                method: 'GET',
+            });
+            const dataScore = await resScore.json();
+            console.log(dataScore);
+            setScore(dataScore);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    useEffect(() => {
+
+        if(!supabase) return;
+        supabase
+          .channel('score')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'score' }, handleInserts)
+          .subscribe()
+
+          supabase
+          .channel('user')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'user' }, handleInserts)
+          .subscribe()
+
+        if (localStorage.getItem('playerId')) {
             fetchData();
           }
-        }, []);
+        }, [supabase]);
 
         useEffect(() => {
             if (score) {
