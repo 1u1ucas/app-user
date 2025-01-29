@@ -77,7 +77,7 @@ const supabase = createClient(
             >
               <div className="sm:w-16 sm:h-16 avatar flex self-center"> </div>
               <div className="flex flex-col self-center gap-1">
-              <p>{participant.username}<span className="text-xs opacity-50">#{participant.playerId}</span></p>
+              <p>{participant.username} <span className="text-xs opacity-50">#{participant.playerId}</span></p>
               <p>Score: {participant.score}</p>
               </div>
               <h2 className="flex self-center items-center justify-center rounded-full text-white w-8 h-8">

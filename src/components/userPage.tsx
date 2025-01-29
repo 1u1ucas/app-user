@@ -85,6 +85,11 @@ export default function UserPage() {
             }
         }, [score]);
 
+        const deconnect = () => {
+            localStorage.removeItem('playerId');
+            window.location.reload();
+        }
+
     return (
         <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
             <h1 className="text-6xl font-semibold">{user?.username}</h1>
@@ -114,6 +119,13 @@ export default function UserPage() {
                   </div>
                 </div>
             ))}
+            <button 
+              onClick={() => {
+                deconnect();
+              }}
+              className={`profilButton rounded-full flex items-center py-6 px-14 text-3xl`}>
+                me déconnecter
+            </button>
             </div>
         </div>
     )

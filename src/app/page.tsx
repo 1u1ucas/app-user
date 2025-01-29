@@ -54,6 +54,7 @@ export default function Home() {
       setError('Erreur lors de la création de l\'utilisateur');
     } finally {
       setLoading(false);
+      window.location.reload();
     }
   };
 
