@@ -59,7 +59,7 @@ export default function Home() {
   };
 
   return (
-    <section className="flex flex-col justify-between items-center self-center pt-24 p-2 gap-40">
+    <section className="flex flex-col justify-between items-center self-center pt-24 p-2 gap-20">
       <div className="flex flex-col items-center gap-10">
         {error && <p style={{ color: 'red' }}>{error}</p>}
         
@@ -90,15 +90,19 @@ export default function Home() {
             </button>
           </form>
         )}
+      
       </div>
-      {userPageActive && <UserPage/>}
-      
-      
-      {!userPageActive && (
+      {playerId && (
         <>
-        <BoardButton active={active} setActive={setActive} />
-          {active === "general" && <GlobalRank />}
-          {active === "leaderboard" && <LeaderBoard />}
+          {userPageActive ? (
+            <UserPage />
+          ) : (
+            <>
+              <BoardButton active={active} setActive={setActive} />
+              {active === "general" && <GlobalRank />}
+              {active === "leaderboard" && <LeaderBoard />}
+            </>
+          )}
         </>
       )}
     </section>

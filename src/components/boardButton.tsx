@@ -18,21 +18,21 @@ export default function BoardButton({ active, setActive }: BoardButtonProps) {
       {/* Bouton "Classement général" */}
       <button
         onClick={() => setActive("general")}
-        className={`relative z-10 flex-1 font-bold py-2 rounded-full whitespace-nowrap m-2 ${
+        className={`flex justify-center items-center relative z-10 flex-1 font-bold py-2 rounded-full whitespace-nowrap m-2 min-w-32 ${
           active === "general" ? "text-black" : "text-white"
         }`}
       >
-        Classement général
+        Classement
       </button>
 
       {/* Bouton "Leaderboard" */}
       <button
         onClick={() => setActive("leaderboard")}
-        className={`relative z-10 flex-1 self-center font-bold py-2 rounded-full m-2 ${
+        className={`flex justify-center items-center relative z-10 flex-1 self-center font-bold py-2 rounded-full m-2 min-w-32 ${
           active === "leaderboard" ? "text-black" : "text-white"
         }`}
       >
-        Leaderboard‎ ‎ ‎ ‎ ‎ ‎ ‎ 
+        Leaderboard
       </button>
     </div>
   );

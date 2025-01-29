@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const games = [
   { id: 0, name: "Beat Saber" },
@@ -12,7 +12,10 @@ const games = [
 
 export default function Admin() {
   const [playerId, setPlayerId] = useState("");
-  const [gameId, setGameId] = useState(games[0].id);
+  const [gameId, setGameId] = useState(() => {
+    const savedGameId = localStorage.getItem("gameId");
+    return savedGameId ? Number(savedGameId) : games[0].id;
+  });
   const [score, setScore] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +42,7 @@ export default function Admin() {
     setError(null);
 
     try {
-      const response = await fetch("/api/scores/create", {
+      const response = await fetch("/api/score/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,6 +56,7 @@ export default function Admin() {
         setError(result.error || "Erreur inconnue");
       } else {
         alert("Score ajouté avec succès");
+        localStorage.setItem("gameId", gameId.toString());
       }
     } catch (err) {
       setError("Erreur lors de l'ajout du score");
@@ -78,7 +82,7 @@ export default function Admin() {
             required
           />
           <select
-            className="flex w-full h-14 rounded-full p-5 justify-center items-center text-center g-5"
+            className="flex w-full h-14 rounded-full p-5 justify-center items-center text-center g-5 text-black"
             id="gameId"
             name="gameId"
             value={gameId}

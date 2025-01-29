@@ -123,7 +123,7 @@ export default function UserPage() {
               onClick={() => {
                 deconnect();
               }}
-              className={`profilButton rounded-full flex items-center py-6 px-14 text-3xl`}>
+              className={`profilButton rounded-full flex items-center py-6 px-14 text-3xl mt-32`}>
                 me déconnecter
             </button>
             </div>

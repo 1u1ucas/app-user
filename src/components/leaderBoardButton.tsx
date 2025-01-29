@@ -23,8 +23,8 @@ export default function LeaderBoardButton({ activity, setActivity }: BoardButton
     <div className="relative flex flex-col self-center sm:flex-row background sm:rounded-full rounded-3xl h-fit sm:w-full w-52 gap-2 sm:gap-12">
       {/* Effet de slide */}
       <motion.div
-        className="absolute bg-[#00C8C8] rounded-full self-center"
-        style={{ width: isMobile ? `calc(100% / 1.5)` : `calc(100% / 5)`, height: isMobile ? `calc(100% / 5)` : '100%' }}
+        className="absolute bg-[#00C8C8] sm:rounded-full rounded-3xl self-center"
+        style={{ width: isMobile ? `calc(100%)` : `calc(100% / 5)`, height: isMobile ? `calc(100% / 5)` : '100%' }}
         animate={isMobile ? { y: `${activity * 100}%` } : { x: `${activity * 100}%` }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
