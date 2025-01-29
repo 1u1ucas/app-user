@@ -87,7 +87,7 @@ export default function UserPage() {
 
     return (
         <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
-            <h1 className="text-9xl font-semibold">{user?.username}</h1>
+            <h1 className="text-6xl font-semibold">{user?.username}</h1>
             <p className="text-xl ">Ton code (celui pour pouvoir obtenir un score) est :</p>
             <span className="text-8xl font-bold text-[#00C4B3]">{user?.playerId}</span>
             <h2 className="text-4xl font-bold">Ton score Global</h2>

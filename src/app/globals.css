@@ -11,6 +11,7 @@ body {
   background: cover;
   font-family: Inter, sans-serif;
   color: white;
+  margin-bottom: 40px;
 }
 
 body::before {
