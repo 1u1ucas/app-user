@@ -75,7 +75,7 @@ export default function UserPage() {
               <p>Score: {globalScore}</p>
               </div>
             </div>
-            <div>
+            <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
             <h2 className="text-4xl font-bold">Ton score par jeu</h2>
             {score?.map((game: any, index: number) => (
                 <div
