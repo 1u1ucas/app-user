@@ -12,10 +12,9 @@ const games = [
 
 export default function Admin() {
   const [playerId, setPlayerId] = useState("");
-  const [gameId, setGameId] = useState(() => {
-    const savedGameId = localStorage.getItem("gameId");
-    return savedGameId ? Number(savedGameId) : games[0].id;
-  });
+  const [gameId, setGameId] = useState<number>(games[0].id)
+  
+  setGameId(Number(localStorage.getItem('gameId')) || games[0].id);
   const [score, setScore] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
