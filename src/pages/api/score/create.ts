@@ -48,6 +48,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({ message: 'Score plus petit ou égal au score actuel' });
       }
 
+      //delete le score actuel
+
+        const { data: deleteData, error: deleteError } = await supabase
+          .from('score')
+          .delete()
+          .eq('playerId', playerId)
+          .eq('gameId', gameId)
+          .single();
+
+        if (deleteError) {
+          console.error("Erreur lors de la suppression du score:", deleteError); // Log l'erreur détaillée
+          return res.status(500).json({ error: deleteError.message || 'Erreur inconnue lors de la suppression du score' });
+        }
+
+
       //récupère le username avec le playerId
       const { data: playerData, error: playerError } = await supabase
         .from('user')
