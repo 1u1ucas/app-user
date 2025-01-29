@@ -1,7 +1,27 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '../utils/db';
+import Cors from 'cors';
+
+const cors = Cors({
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: '*',
+});
+
+// Helper method to wait for a middleware to execute before continuing
+function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: (req: NextApiRequest, res: NextApiResponse, result: (result: any) => void) => void) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Run the middleware
+  await runMiddleware(req, res, cors);
   const { id } = req.query; // Récupère le paramètre de l'URL (peut être `id` ou `player_id`)
 
   if (!id || typeof id !== 'string') {
