@@ -67,7 +67,7 @@ const supabase = createClient(
           </g>
         </svg>
  
-        <h2 className="font-bold sm:text-4xl text-xl ">Global Rank - {participants.length} PARTICIPANTS</h2>
+        <h2 className="font-bold sm:text-4xl text-xl ">Classement Global - {participants.length} PARTICIPANTS</h2>
         </div>
         <div className="grid grid-flow-row grid-cols-2 gap-4 w-full">
           {participants.slice(0, 10).map((participant, index) => (

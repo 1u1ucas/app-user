@@ -22,7 +22,7 @@ export default function BoardButton({ active, setActive }: BoardButtonProps) {
           active === "general" ? "text-black" : "text-white"
         }`}
       >
-        Classement
+        Global Rank
       </button>
 
       {/* Bouton "Leaderboard" */}
@@ -32,7 +32,7 @@ export default function BoardButton({ active, setActive }: BoardButtonProps) {
           active === "leaderboard" ? "text-black" : "text-white"
         }`}
       >
-        Leaderboard
+        Game Rank
       </button>
     </div>
   );

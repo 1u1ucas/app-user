@@ -6,6 +6,7 @@ import GlobalRank from "../components/globalRank";
 import LeaderBoard from "../components/leaderBoard";
 import BoardButton from "../components/boardButton";
 import UserPage from "../components/userPage";
+import { set } from "react-hook-form";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -19,6 +20,7 @@ export default function Home() {
   useEffect(() => {
     if (localStorage.getItem('playerId')) {
       setPlayerId(localStorage.getItem('playerId'));
+      setUserPageActive(true);
     }
   }, []);
 
