@@ -104,38 +104,39 @@ export default function UserPage() {
           <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
             <h2 className="text-4xl font-bold">Ton score Global</h2>
             <div
-              className={`firstRank rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 `}
-            >
+              className={`firstRank rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 `}>
               <div className="sm:w-16 sm:h-16 avatar flex self-center"> </div>
               <div className="flex flex-row self-center gap-4 pr-4">
-              <p>{user?.username}<span className="text-xs opacity-50">#{user?.playerId}</span></p>
-              <p>Score: {globalScore}</p>
+                <p>{user?.username}<span className="text-xs opacity-50">#{user?.playerId}</span></p>
+                <p>Score: {globalScore}</p>
               </div>
             </div>
           </div>
             <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
-            <h2 className="text-4xl font-bold">Ton score par jeu</h2>
-            {score?.map((game: any, index: number) => (
+            <h2 className="text-4xl font-bold">Ton score par jeu :</h2>
+            {score?.length > 0 ? (
+              score.map((game: any, index: number) => (
                 <div
-                  key={index}
-                  className={`rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 `}
-                >
+                key={index}
+                className={`rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 `}>
                   <div className="sm:w-16 sm:h-16 avatar flex self-center "> </div>
                   <div className="flex flex-row self-center gap-4 pr-4">
                     <p>{gameName[game.gameId].name}</p>
                     <p>Score: {game.score}</p>
                   </div>
                 </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-xl">Tu n'as pas encore de score</p>
+            )}
           </div>
-            <button 
-              onClick={() => {
-                deconnect();
-              }}
-              className={`profilButton rounded-full flex items-center py-6 px-14 text-3xl mt-32`}>
-                me déconnecter
-            </button>
-        </div>
+          <button 
+          onClick={() => {
+            deconnect();
+          }}
+          className={`profilButton rounded-full flex items-center py-6 px-14 text-3xl mt-32`}>
+            me déconnecter
+          </button>
+      </div>
     )
-
 }
