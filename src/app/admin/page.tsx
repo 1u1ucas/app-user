@@ -8,6 +8,7 @@ const games = [
   { id: 2, name: "Escape Room" },
   { id: 3, name: "Gran Turismo 7" },
   { id: 4, name: "Puzzle Tracer" },
+  { id: 5, name: "Step Mania" },
 ];
 
 export default function Admin() {
