@@ -113,7 +113,7 @@ export default function UserPage() {
             </div>
           </div>
             <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
-            <h2 className="text-4xl font-bold">Ton score par jeu :</h2>
+            <h2 className="text-4xl font-bold">Ton score par jeu</h2>
             {score?.length > 0 ? (
               score.map((game: any, index: number) => (
                 <div
