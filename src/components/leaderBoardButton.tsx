@@ -24,7 +24,7 @@ export default function LeaderBoardButton({ activity, setActivity }: BoardButton
       {/* Effet de slide */}
       <motion.div
         className="absolute bg-[#00C8C8] sm:rounded-full rounded-3xl self-center"
-        style={{ width: isMobile ? `calc(100%)` : `calc(100% / 5)`, height: isMobile ? `calc(100% / 5)` : '100%' }}
+        style={{ width: isMobile ? `calc(100%)` : `calc(100% / 6)`, height: isMobile ? `calc(100% / 6)` : '100%' }}
         animate={isMobile ? { y: `${activity * 100}%` } : { x: `${activity * 100}%` }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
@@ -67,6 +67,14 @@ export default function LeaderBoardButton({ activity, setActivity }: BoardButton
         }`}
       >
         Puzzle Tracer
+      </button>
+      <button
+        onClick={() => setActivity(5)}
+        className={`relative z-10 flex-1 font-bold py-2 rounded-full whitespace-nowrap m-1 sm:m-2 w-full sm:w-32 ${
+          activity === 5 ? "text-black" : "text-white"
+        }`}
+      >
+        Step Mania
       </button>
     </div>
   );

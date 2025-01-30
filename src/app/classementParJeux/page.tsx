@@ -7,7 +7,7 @@ export default function ClassementParJeux() {
     const [timer, setTimer] = useState(0);
 
     useEffect(() => {
-        if (timer === 5) {
+        if (timer === 6) {
             setTimer(0);  
         }
         const interval = setInterval(() => {

@@ -34,6 +34,10 @@ export default function UserPage() {
         {
             id: 4,
             name: "Puzzle Tracer"
+        },
+        {
+          id: 5,
+          name: "Step Mania"
         }
     ]);  
     
