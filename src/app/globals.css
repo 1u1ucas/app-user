@@ -54,7 +54,6 @@ input {
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(15px);
   text-align: center;
-  justify-content: space-between;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 

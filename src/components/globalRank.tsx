@@ -69,20 +69,17 @@ const supabase = createClient(
  
         <h2 className="font-bold sm:text-4xl text-xl ">Classement Global - {participants.length} PARTICIPANTS</h2>
         </div>
-        <div className="grid grid-flow-row grid-cols-2 gap-4 w-full">
+        <div className="grid grid-flow-row sm:grid-cols-2 grid-col-1 gap-4 w-full">
           {participants.slice(0, 10).map((participant, index) => (
             <div
               key={index}
-              className={`rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 ${index === 0 ? 'firstRank' : ''} ${index === 1 ? 'secondRank' : ''} ${index === 2 ? 'thirdRank' : ''}`}
+              className={`rank flex rounded-full text-white w-3xs min-h-1/5 items-center px-8 text-center justify-between sm:gap-5 py-4 ${index === 0 ? 'firstRank' : ''} ${index === 1 ? 'secondRank' : ''} ${index === 2 ? 'thirdRank' : ''}`}
             >
-              <div className="sm:w-16 sm:h-16 avatar flex self-center"> </div>
-              <div className="flex flex-col self-center gap-1">
-              <p>{participant.username} <span className="text-xs opacity-50">#{participant.playerId}</span></p>
-              <p>Score: {participant.score}</p>
+              <div className="flex self-center items-center justify-center rounded-full text-white rank Rank sm:w-32 sm:h-32 w-16 h-16 text-center">
+                <h2 className="sm:text-8xl text-4xl">{index + 1}</h2> 
               </div>
-              <h2 className="flex self-center items-center justify-center rounded-full text-white w-8 h-8">
-                {index + 1}
-              </h2>
+              <p className="sm:text-lg text-sm">{participant.username} <span className="text-xs opacity-50">#{participant.playerId}</span></p>
+              <p className="sm:text-lg text-sm">Score: {participant.score}</p>
             </div>
           ))}
         </div>
