@@ -95,10 +95,13 @@ export default function UserPage() {
         }
 
     return (
-        <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
+        <div className="flex flex-col items-center justify-start gap-32 w-full sm:px-10 px-2">
+          <div className="flex flex-col items-center gap-4">
             <h1 className="text-6xl font-semibold">{user?.username}</h1>
             <p className="text-xl ">Ton code (celui pour pouvoir obtenir un score) est :</p>
             <span className="text-8xl font-bold text-[#00C4B3]">{user?.playerId}</span>
+          </div>
+          <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
             <h2 className="text-4xl font-bold">Ton score Global</h2>
             <div
               className={`firstRank rank flex rounded-full text-white w-3xs min-h-1/5 text-center justify-between sm:gap-5 px-2 py-4 `}
@@ -109,6 +112,7 @@ export default function UserPage() {
               <p>Score: {globalScore}</p>
               </div>
             </div>
+          </div>
             <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
             <h2 className="text-4xl font-bold">Ton score par jeu</h2>
             {score?.map((game: any, index: number) => (
@@ -123,6 +127,7 @@ export default function UserPage() {
                   </div>
                 </div>
             ))}
+          </div>
             <button 
               onClick={() => {
                 deconnect();
@@ -130,7 +135,6 @@ export default function UserPage() {
               className={`profilButton rounded-full flex items-center py-6 px-14 text-3xl mt-32`}>
                 me déconnecter
             </button>
-            </div>
         </div>
     )
 
