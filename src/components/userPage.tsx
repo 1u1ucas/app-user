@@ -98,7 +98,7 @@ export default function UserPage() {
         <div className="flex flex-col items-center justify-start gap-32 w-full sm:px-10 px-2">
           <div className="flex flex-col items-center gap-4">
             <h1 className="text-6xl font-semibold">{user?.username}</h1>
-            <p className="text-xl ">Ton code (celui pour pouvoir obtenir un score) est :</p>
+            <p className="text-xl  text-center self-center">Ton code (celui pour pouvoir obtenir un score) est :</p>
             <span className="text-8xl font-bold text-[#00C4B3]">{user?.playerId}</span>
           </div>
           <div className="flex flex-col items-center justify-start gap-4 w-full sm:px-10 px-2">
