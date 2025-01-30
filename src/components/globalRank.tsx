@@ -70,7 +70,7 @@ const supabase = createClient(
         <h2 className="font-bold sm:text-4xl text-xl ">Classement Global - {participants.length} PARTICIPANTS</h2>
         </div>
         <div className="grid grid-flow-row sm:grid-cols-2 grid-col-1 gap-4 w-full">
-          {participants.slice(0, 10).map((participant, index) => (
+          {participants.map((participant, index) => (
             <div
               key={index}
               className={`rank flex rounded-full text-white w-3xs min-h-1/5 items-center pl-4 pr-8 text-center justify-between sm:gap-5 py-4 ${index === 0 ? 'firstRank' : ''} ${index === 1 ? 'secondRank' : ''} ${index === 2 ? 'thirdRank' : ''}`}
