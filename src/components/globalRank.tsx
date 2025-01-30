@@ -73,7 +73,7 @@ const supabase = createClient(
           {participants.slice(0, 10).map((participant, index) => (
             <div
               key={index}
-              className={`rank flex rounded-full text-white w-3xs min-h-1/5 items-center px-8 text-center justify-between sm:gap-5 py-4 ${index === 0 ? 'firstRank' : ''} ${index === 1 ? 'secondRank' : ''} ${index === 2 ? 'thirdRank' : ''}`}
+              className={`rank flex rounded-full text-white w-3xs min-h-1/5 items-center pl-4 pr-8 text-center justify-between sm:gap-5 py-4 ${index === 0 ? 'firstRank' : ''} ${index === 1 ? 'secondRank' : ''} ${index === 2 ? 'thirdRank' : ''}`}
             >
               <div className="flex self-center items-center justify-center rounded-full text-white rank Rank sm:w-32 sm:h-32 w-16 h-16 text-center">
                 <h2 className="sm:text-8xl text-4xl">{index + 1}</h2> 
